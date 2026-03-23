@@ -1,43 +1,48 @@
 #include <iostream>
+#include <string>
+#include <climits>
 using namespace std;
 
 #include "student.h"
-#define N 3
+
 int main(int argc, char* argv[]) {
-  student s1,s2;
 
- s1.set_name("Amy"); s1.set_age(20); s2.set_name("James"); s2.set_age(17); s1.get_age()>s2.get_age() ? s1.print_name(); cout<< "is older":s2.print_name(); cout <<"is older";
+  // Number of students is derived from argv: each student needs name + age (2 args)
+  // argc = 1 (program name) + N*2
+  int N = (argc - 1) / 2;
 
-
-
-  student a[N];
-  // Set age and set name for the first two ppl
-  int i,age;
-  string n;
-   // 1. Ask for N names and N age using cin
- 
-  
- 
-  //2. Print name and age of all N ppl
-  
-  
-  
-  //3. Print name and age of 
-  //the youngest person
-  //Find what the age of the youngest person
- 
-  
-  // Print all info for the yougest person
- 
-  
-  
-  //4. Change input from cin to argv
-
-  
- return 0;
-
-    
+  if (N <= 0) {
+    cout << "Usage: " << argv[0] << " name1 age1 name2 age2 ..." << endl;
+    return 1;
   }
+  // Read students from argv
+
+  student* a = new student[N];
+  for (int i = 0; i < N; i++) {
+    a[i].set_name(string(argv[1 + i * 2]));
+    a[i].set_age(atoi(argv[2 + i * 2]));
+  }
+
+  // Find and print the youngest person(s)
+  // If more than 1, display all
+
+  int minAge = INT_MAX;
+  for (int i = 0; i < N; i++) {
+    if (a[i].get_age() < minAge) {
+      minAge = a[i].get_age();
+    }
+  }
+
+  cout << "Youngest student" << endl;
+  for (int i = 0; i < N; i++) {
+    if (a[i].get_age() == minAge) {
+      a[i].display();
+    }
+  }
+
+  delete[] a;
+  return 0;
+}
   
   
 
